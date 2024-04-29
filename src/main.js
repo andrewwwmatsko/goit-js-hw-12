@@ -1,4 +1,4 @@
-import fetchImages from './js/pixabay-api';
+import { fetchImages, loadMore } from './js/pixabay-api';
 import createMarkup from './js/render-functions';
 
 import iziToast from 'izitoast';
@@ -8,11 +8,14 @@ import 'izitoast/dist/css/iziToast.min.css';
 import icon from './img/error-icon.svg';
 
 const form = document.querySelector('.form');
+export const loadMoreBtn = document.querySelector('.load-more-btn');
+let currentKeyword = '';
 
 form.addEventListener('submit', e => {
   //show loader
   const loader = document.querySelector('.loader');
   loader.style.display = 'block';
+  console.log(loader);
 
   //prevent default events on the form
   e.preventDefault();
@@ -23,7 +26,7 @@ form.addEventListener('submit', e => {
     loader.style.display = 'none';
     return;
   }
-
+  currentKeyword = inputValue;
   //fetch (axios)
   fetchImages(inputValue)
     .then(data => {
@@ -52,10 +55,30 @@ form.addEventListener('submit', e => {
       //creating markup
       createMarkup(data);
       loader.style.display = 'none';
+      loadMoreBtn.style.display = 'block';
     })
     .catch(error => {
       loader.style.display = 'none';
       console.log(error.message);
     });
   form.reset();
+});
+
+loadMoreBtn.addEventListener('click', async () => {
+  //show loader
+  const loader = document.querySelector('.loader');
+  loader.style.display = 'block';
+  await loadMore()
+    .then(data => {
+      if (!data) {
+        loader.style.display = 'none';
+        return;
+      }
+      createMarkup(data);
+      loader.style.display = 'none';
+    })
+    .catch(error => {
+      console.log(error);
+      loader.style.display = 'none';
+    });
 });

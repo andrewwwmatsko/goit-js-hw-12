@@ -4,9 +4,6 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 export default function createMarkup(fetchedData) {
-  //clear collection
-  listOfImages.innerHTML = '';
-
   //creating markup with fetched data
   const markup = fetchedData.hits
     .map(image => {

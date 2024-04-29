@@ -12,12 +12,12 @@ export const loadMoreBtn = document.querySelector('.load-more-btn');
 let currentKeyword = '';
 
 form.addEventListener('submit', e => {
+  //prevent default events on the form
+  e.preventDefault();
+
   //show loader
   const loader = document.querySelector('.loader');
   loader.style.display = 'block';
-
-  //prevent default events on the form
-  e.preventDefault();
 
   //trimming a search value
   const inputValue = e.currentTarget.elements.search.value.trim();
@@ -48,6 +48,7 @@ form.addEventListener('submit', e => {
 
         //loader off
         loader.style.display = 'none';
+        loadMoreBtn.style.display = 'none';
         return;
       }
 
@@ -68,13 +69,20 @@ loadMoreBtn.addEventListener('click', async () => {
   const loader = document.querySelector('.loader');
   loader.style.display = 'block';
   loadMoreBtn.style.display = 'none';
+
   await loadMore()
     .then(data => {
       if (!data) {
         loader.style.display = 'none';
         return;
       }
+      // getting a card's height
+      const card = document.querySelector('.images-image');
+      const rect = card.getBoundingClientRect();
+      const cardHeight = rect.height;
+
       createMarkup(data);
+      window.scrollBy(0, cardHeight * 2);
       loader.style.display = 'none';
       loadMoreBtn.style.display = 'block';
     })

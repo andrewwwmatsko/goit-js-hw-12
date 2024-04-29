@@ -24,6 +24,7 @@ export async function fetchImages(searchValue) {
   // loader on
   const loader = document.querySelector('.loader');
   loader.style.display = 'block';
+  loadMoreBtn.style.display = 'none';
 
   // options for axios GET request
   const searchParams = new URLSearchParams({

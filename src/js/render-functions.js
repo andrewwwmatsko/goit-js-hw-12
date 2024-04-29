@@ -40,6 +40,7 @@ export default function createMarkup(fetchedData) {
   var lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'title',
     captionDelay: 350,
+    fadeSpeed: 220,
   });
   lightbox.refresh();
 }

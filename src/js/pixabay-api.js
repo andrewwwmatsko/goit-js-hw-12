@@ -13,7 +13,6 @@ const authKey = '43558017-e13ccc47d2aef7f917b5afe22';
 const perPage = 15;
 let page = 1;
 let currentSearchValue = '';
-let totalItems = 0;
 
 export async function fetchImages(searchValue) {
   page = 1;

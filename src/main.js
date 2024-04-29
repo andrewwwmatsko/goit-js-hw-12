@@ -15,7 +15,6 @@ form.addEventListener('submit', e => {
   //show loader
   const loader = document.querySelector('.loader');
   loader.style.display = 'block';
-  console.log(loader);
 
   //prevent default events on the form
   e.preventDefault();
@@ -68,6 +67,7 @@ loadMoreBtn.addEventListener('click', async () => {
   //show loader
   const loader = document.querySelector('.loader');
   loader.style.display = 'block';
+  loadMoreBtn.style.display = 'none';
   await loadMore()
     .then(data => {
       if (!data) {
@@ -76,6 +76,7 @@ loadMoreBtn.addEventListener('click', async () => {
       }
       createMarkup(data);
       loader.style.display = 'none';
+      loadMoreBtn.style.display = 'block';
     })
     .catch(error => {
       console.log(error);
